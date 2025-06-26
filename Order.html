@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shopping Cart Gabungan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #aad2f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 35px;
+      font-weight: 700;
+      color: #1f4a64;
+      margin: 40px 0 20px;
+    }
+
+   .order-card {
+  background-color: #d9e9f2;
+  border-radius: 14px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;                /* dari 90% jadi 85% */
+  max-width: 400px;          /* dari 700px jadi 500px */
+  margin: 10px 0;
+}
+
+
+    .order-card img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-right: 12px;
+    }
+
+    .order-info {
+      flex: 1;
+    }
+
+    .item-name {
+      font-size: 13px;
+      color: #0f2e44;
+      margin: 0;
+    }
+
+    .item-price {
+      font-size: 13px;
+      font-weight: bold;
+      color: #0f2e44;
+      margin-top: 4px;
+    }
+
+    .status {
+      font-size: 14px;
+      font-weight: bold;
+      color: #0f2e44;
+      background-color: transparent;
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+
+    .status-buttons-fixed {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .status-btn {
+      background-color: #d9e9f2;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      color: #0f2e44;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .status-btn.active {
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="title">My Order</div>
+
+  <div class="order-card">
+    <img src="beruang.jpg" alt="Boneka Beruang Teddy">
+    <div class="order-info">
+      <p class="item-name">Boneka Beruang Teddy</p>
+      <p class="item-price">Rp. 85.000</p>
+    </div>
+    <div class="status" id="order-status">Order Made</div>
+  </div>
+
+  <div class="status-buttons-fixed">
+    <button class="status-btn active">Order Made</button>
+    <button class="status-btn">Order Completed</button>
+    <button class="status-btn">Order Completed</button>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll(".status-btn");
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        buttons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>

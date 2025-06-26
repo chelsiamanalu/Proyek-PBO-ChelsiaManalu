@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Plushy</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=More+Sugar&family=Poppins:wght@400;700&display=swap');
+
+    body {
+      background-color: #AAD3F1;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #154360;
+      text-align: center;
+    }
+
+    svg {
+      width: 300px;
+      height: 100px;
+      margin-bottom: 20px;
+    }
+
+    .description {
+      font-size: 19px;
+      line-height: 1.7;
+      margin: 20px auto;
+      max-width: 700px;
+    }
+
+    .note {
+      margin-top: 30px;
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+
+    .next-button {
+      background-color: #D6F0FD;
+      border: none;
+      padding: 12px 32px;
+      font-size: 18px;
+      border-radius: 15px;
+      cursor: pointer;
+      color: #154360;
+      font-weight: bold;
+    }
+
+    .next-button:hover {
+      background-color: #D6F0FD;
+    }
+  </style>
+</head>
+<body>
+
+  <div style="margin-top: 30px;"></div>
+  <svg viewBox="0 0 300 100">
+    <defs>
+      <path id="curve" d="M 10,80 Q 150,10 290,80" fill="transparent" />
+    </defs>
+    <text fill="#1A5276" font-family="More Sugar" font-size="64" font-weight="bold">
+      <textPath href="#curve" startOffset="50%" text-anchor="middle" dy="50">
+        Plushy
+      </textPath>
+    </text>
+  </svg>
+
+  <div class="description">
+    Online shopping application dedicated specifically for doll lovers! Here, you can find various types of dolls. With a user-friendly interface and easy search feature, Plushy makes it easy for you to find your dream doll with just a few clicks. Every product available is guaranteed to be original and of high quality, because we only work with trusted brands and professional doll craftsmen.
+  </div>
+
+  <div class="note">
+    Please enter your Email or Number to help login. <br>
+    You can change your Email or Number
+  </div>
+
+  <button class="next-button" onclick="location.href='plushy sign up.html'">Next</button>
+
+</body>
+</html>

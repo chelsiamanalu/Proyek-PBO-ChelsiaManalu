@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Toko Boneka - Desktop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      background: #aad2f5;
+      font-family: 'Segoe UI', Glacial Indifference, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 20px 40px 100px;
+    }
+
+    .search-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .search-row {
+      display: flex;
+      align-items: center;
+      background: #d0e8f6;
+      border-radius: 30px;
+      padding: 12px 20px;
+      flex: 1;
+      margin-right: 20px;
+    }
+
+    .search-row i {
+      font-size: 20px;
+      color: #1f4a64;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .search-row i:hover,
+    .search-buttons i:hover,
+    .bottom-nav i:hover {
+      color: #0f2e44;
+    }
+
+    .search-row input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 18px;
+      margin: 0 10px;
+      outline: none;
+      color: #1f4a64;
+    }
+
+    .search-buttons {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .search-buttons i {
+      font-size: 24px;
+      color: #265d7e;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .search-buttons i.clicked,
+    .bottom-nav i.active {
+      color: #0f2e44;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 24px;
+    }
+
+    .product-card {
+      background: #e3f0fc;
+      border-radius: 20px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: contain;
+      border-radius: 16px;
+      margin-bottom: 10px;
+      background: transparent;
+    }
+
+    .product-title {
+      font-size: 16px;
+      color: #265d7e;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+
+    .product-price {
+      font-size: 16px;
+      font-weight: bold;
+      color: #265d7e;
+    }
+
+    .cart-icon {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 20px;
+      color: #265d7e;
+      cursor: pointer;
+    }
+    .cart-icon.clicked {
+  color: #0f2e44; 
+}
+
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+      background: #e3f0fc;
+      width: 400px;
+      max-width: 90%;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 68px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+    }
+
+    .bottom-nav i {
+      font-size: 24px;
+      color: #265d7e;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .notification-wrapper {
+      position: relative;
+    }
+
+    .notification-dot {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 10px;
+      height: 10px;
+      background: rgb(243, 52, 52);
+      border-radius: 50%;
+      display: block;
+    }
+
+    #notification-popup {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 16px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      font-size: 14px;
+      width: 260px;
+      z-index: 20;
+    }
+
+    #notification-popup.hidden {
+      display: none;
+    }
+
+    #notification-popup h4 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      color: #10374d;
+    }
+
+    #notification-popup ul {
+      padding-left: 18px;
+      margin: 0;
+    }
+
+    #notification-popup li {
+      margin-bottom: 6px;
+      color: #333;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+
+      .search-row {
+        margin-right: 10px;
+      }
+
+      .product-card img {
+        height: 140px;
+      }
+
+       #notification-popup {
+      font-size: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="search-container">
+      <div class="search-row">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Cari..." id="searchInput" onkeyup="filterProduk()">
+      </div>
+      <div class="search-buttons">
+      </div>
+    </div>
+
+    <div class="products" id="produk-section">
+  <div class="product-card">
+    <img src="beruang.jpg">
+    <div class="product-title">Boneka Beruang Teddy</div>
+    <div class="product-price">Rp. 85.000</div>
+    <i class="fas fa-shopping-cart cart-icon" 
+       data-name="Boneka Beruang Teddy" 
+       data-price="85000" 
+       data-image="beruang.jpg"></i>
+  </div>
+  <div class="product-card">
+    <img src="putih.jpg">
+    <div class="product-title">Boneka Kucing Lucu</div>
+    <div class="product-price">Rp. 85.000</div>
+    <i class="fas fa-shopping-cart cart-icon" 
+       data-name="Boneka Kucing Lucu" 
+       data-price="85000" 
+       data-image="putih.jpg"></i>
+  </div>
+  <div class="product-card">
+    <img src="kuning.jpg">
+    <div class="product-title">Bantal Boneka Lembut</div>
+    <div class="product-price">Rp. 94.500</div>
+    <i class="fas fa-shopping-cart cart-icon" 
+       data-name="Bantal Boneka Lembut" 
+       data-price="94500" 
+       data-image="kuning.jpg"></i>
+  </div>
+  <div class="product-card">
+    <img src="bertiga.jpg">
+    <div class="product-title">Boneka Kucing Furyu</div>
+    <div class="product-price">Rp. 40.000</div>
+    <i class="fas fa-shopping-cart cart-icon" 
+       data-name="Boneka Kucing Furyu" 
+       data-price="40000" 
+       data-image="bertiga.jpg"></i>
+  </div>
+  <div class="product-card">
+    <img src="dino.jpg">
+    <div class="product-title">Boneka Dino</div>
+    <div class="product-price">Rp. 88.000</div>
+    <i class="fas fa-shopping-cart cart-icon" 
+       data-name="Boneka Dino" 
+       data-price="88000" 
+       data-image="dino.jpg"></i>
+  </div>
+  <div class="product-card">
+    <img src="kelinci.jpg">
+    <div class="product-title">Boneka Kelinci</div>
+    <div class="product-price">Rp. 80.000</div>
+    <i class="fas fa-shopping-cart cart-icon" 
+       data-name="Boneka Kelinci" 
+       data-price="80000" 
+       data-image="kelinci.jpg"></i>
+  </div>
+  <div class="product-card">
+    <img src="nemo.jpg">
+    <div class="product-title">Boneka Ikan Nemo</div>
+    <div class="product-price">Rp. 60.000</div>
+    <i class="fas fa-shopping-cart cart-icon" 
+       data-name="Boneka Ikan Nemo" 
+       data-price="60000" 
+       data-image="nemo.jpg"></i>
+  </div>
+  <div class="product-card">
+    <img src="roti.jpg">
+    <div class="product-title">Bantal Boneka Roti</div>
+    <div class="product-price">Rp. 55.000</div>
+    <i class="fas fa-shopping-cart cart-icon" 
+       data-name="Bantal Boneka Roti" 
+       data-price="55000" 
+       data-image="roti.jpg"></i>
+  </div>
+</div>
+
+    </div>
+
+    <div id="notification-popup" class="hidden">
+      <h4>Notifikasi</h4>
+      <ul>
+        <li>Pesanan #1234 telah dibayar</li>
+        <li>Pesanan #1235 menunggu konfirmasi</li>
+        <li>Pesanan #1236 sedang dikirim</li>
+      </ul>
+    </div>
+
+    <div class="bottom-nav">
+      <i class="fas fa-home active" id="home-icon"></i> 
+      <a href="Plushy cart.html">
+        <i class="fas fa-shopping-cart" id="cart-icon"></i>
+      </a>
+      <div class="notification-wrapper">
+        <i class="fas fa-bell" id="notification-icon"></i>
+        <span class="notification-dot" id="notification-dot"></span>
+      </div>
+      <i class="fas fa-share-square" id="logout-icon"></i>
+    </div>
+
+    <script>
+      document.querySelectorAll(".search-buttons i, .search-row i").forEach(icon => {
+        icon.addEventListener("click", () => {
+          icon.classList.add("clicked");
+          setTimeout(() => icon.classList.remove("clicked"), 150);
+        });
+      });
+
+      const navIcons = document.querySelectorAll(".bottom-nav i");
+      const produkSection = document.getElementById("produk-section");
+      const homeIcon = document.getElementById("home-icon");
+
+      homeIcon.addEventListener("click", () => {
+        produkSection.style.display = "grid";
+        setActiveIcon(homeIcon);
+      });
+
+      function setActiveIcon(activeIcon) {
+        navIcons.forEach(icon => icon.classList.remove("active"));
+        activeIcon.classList.add("active");
+      }
+
+      const logoutIcon = document.getElementById("logout-icon");
+      logoutIcon.addEventListener("click", () => {
+        window.location.href = "plushy sign up.html";
+      });
+
+      const notificationIcon = document.getElementById("notification-icon");
+      const notificationDot = document.getElementById("notification-dot");
+      const notificationPopup = document.getElementById("notification-popup");
+
+      notificationIcon.addEventListener("click", () => {
+        notificationPopup.classList.toggle("hidden");
+        notificationDot.style.display = "none";
+      });
+
+      function filterProduk() {
+        const input = document.getElementById("searchInput").value.toLowerCase();
+        const cards = document.querySelectorAll(".product-card");
+
+        cards.forEach(card => {
+          const title = card.querySelector(".product-title").textContent.toLowerCase();
+          card.style.display = title.includes(input) ? "flex" : "none";
+        });
+      }
+      const cartIcons = document.querySelectorAll(".cart-icon");
+
+cartIcons.forEach(icon => {
+  icon.addEventListener("click", () => {
+    icon.classList.add("clicked");
+    setTimeout(() => icon.classList.remove("clicked"), 200);
+
+    const name = icon.getAttribute("data-name");
+    const price = parseInt(icon.getAttribute("data-price"));
+    const image = icon.getAttribute("data-image");
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existingItem = cart.find(item => item.name === name);
+
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({
+        name: name,
+        price: price,
+        image: image,
+        quantity: 1
+      });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+  });
+});
+    </script>
+</body>
+</html>

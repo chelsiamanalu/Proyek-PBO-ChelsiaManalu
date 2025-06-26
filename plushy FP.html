@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Password Page</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=More+Sugar&family=Poppins:wght@400;700&display=swap');
+
+    body {
+      background-color: #AAD3F1;
+      font-family: 'Glacial Indifference', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      color: #154360;
+    }
+
+    svg {
+      width: 300px;
+      height: 100px;
+    }
+
+    h2 {
+      font-family: 'More Sugar', cursive;
+      font-size: 32px;
+      font-weight: 700;
+      margin-top: -7px;
+      margin-bottom: 152px;
+    }
+
+    .form-container {
+      position: relative;
+      top: -95px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+      gap: 15px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      padding: 15px;
+      border-radius: 10px;
+      border: none;
+      background-color: #D3ECF8;
+      font-size: 19px;
+      font-family: 'Glacial Indifference', sans-serif;
+      color: #1A5276;
+    }
+
+    button {
+      padding: 10px;
+      border-radius: 25px;
+      background-color: #D3ECF8;
+      border: none;
+      font-size: 25px;
+      font-weight: 100;
+      font-family: 'Glacial Indifference', sans-serif;
+      cursor: pointer;
+      color: #1A5276;
+    }
+
+  </style>
+</head>
+<body>
+
+  <svg viewBox="0 0 300 100">
+    <defs>
+      <path id="curve" d="M 10,80 Q 150,10 290,80" fill="transparent" />
+    </defs>
+    <text fill="#1A5276" font-family="More Sugar" font-size="64" font-weight="bold">
+      <textPath href="#curve" startOffset="50%" text-anchor="middle">
+        Plushy
+      </textPath>
+    </text>
+  </svg>
+
+  <h2>Welcome</h2>
+
+  <div class="form-container">
+    <form id="updatepasswordForm">
+      <input type="password" id="newPassword" placeholder="Create new password" required>
+      <input type="password" id="confirmPassword" placeholder="Retype new password" required>
+      <button type="submit">Update Password</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('updatepasswordForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (newPassword !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+
+      localStorage.setItem('plushyPassword', newPassword);
+
+      window.location.href = 'Plushy sign in.html';
+    });
+  </script>
+
+</body>
+</html>
